@@ -133,3 +133,13 @@ div.container {
   border-radius: 10px;
   margin: 25px auto 0 25px;
 }
+
+a.active {
+  color: #3f3a32;
+  text-decoration: none;
+}
+
+a.active:hover {
+  cursor: default;
+  text-decoration: none;
+}

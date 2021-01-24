@@ -56,14 +56,20 @@ function retrieveCurrentLocation(event) {
   navigator.geolocation.getCurrentPosition(showTempCurrentLocation);
 }
 
-function showCelsius() {
+function showCelsius(event) {
+  event.preventDefault();
   let currentTemperature = document.querySelector("#current-temperature");
-  currentTemperature.innerHTML = 12;
+  currentTemperature.innerHTML = celsiusTemperature;
+    fahrenheit.classList.remove("active");
+  celsius.classList.add("active");
 }
 
-function showFahrenheit() {
+function showFahrenheit(event) {
+  event.preventDefault();
   let currentTemperature = document.querySelector("#current-temperature");
-  currentTemperature.innerHTML = Math.round((12 * 9) / 5 + 32);
+  currentTemperature.innerHTML = Math.round((celsiusTemperature * 9) / 5 + 32);
+  celsius.classList.remove("active");
+  fahrenheit.classList.add("active");
 }
 
 function displayTemperature(response) {
@@ -74,7 +80,7 @@ function displayTemperature(response) {
   let windSpeed = document.querySelector("#wind-speed");
   let mainCity = document.querySelector("#searched-city");  
   let weatherIcon = document.querySelector("#current-weather-icon");
-  let roundedTemp = Math.round(response.data.main.temp);
+  celsiusTemperature = Math.round(response.data.main.temp);
   let minimum = Math.round(response.data.main.temp_min);
   let maximum = Math.round(response.data.main.temp_max);
   let humidityLevel = response.data.main.humidity;
@@ -83,7 +89,8 @@ function displayTemperature(response) {
   let city = response.data.name;
   let currentIcon = response.data.weather[0].icon;
   let description = response.data.weather[0].description;
-  temperature.innerHTML = roundedTemp;
+  
+  temperature.innerHTML = celsiusTemperature;
   minTemp.innerHTML = minimum;
   maxTemp.innerHTML = maximum;
   humidity.innerHTML = humidityLevel;
@@ -170,6 +177,8 @@ currentTime.innerHTML = `${currentHour}:${minutes}`;
 let search = document.querySelector("#city-search-bar");
 
 search.addEventListener("keyup", validate);
+
+let celsiusTemperature = null;
 
 let celsius = document.querySelector("#celsius");
 
