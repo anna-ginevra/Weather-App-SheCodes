@@ -72,7 +72,8 @@ function displayTemperature(response) {
   let maxTemp = document.querySelector("#max-temp");
   let humidity = document.querySelector("#humidity");
   let windSpeed = document.querySelector("#wind-speed");
-  let mainCity = document.querySelector("#searched-city");
+  let mainCity = document.querySelector("#searched-city");  
+  let weatherIcon = document.querySelector("#current-weather-icon");
   let roundedTemp = Math.round(response.data.main.temp);
   let minimum = Math.round(response.data.main.temp_min);
   let maximum = Math.round(response.data.main.temp_max);
@@ -80,12 +81,17 @@ function displayTemperature(response) {
   let speed = Number(response.data.wind.speed);
   let wind = Math.round(speed * 3.6);
   let city = response.data.name;
+  let currentIcon = response.data.weather[0].icon;
+  let description = response.data.weather[0].description;
   temperature.innerHTML = roundedTemp;
   minTemp.innerHTML = minimum;
   maxTemp.innerHTML = maximum;
   humidity.innerHTML = humidityLevel;
   windSpeed.innerHTML = wind;
   mainCity.innerHTML = city;
+  weatherIcon.setAttribute("src", `http://openweathermap.org/img/wn/${currentIcon}@2x.png`);
+ weatherIcon.setAttribute("alt", `${description}`);
+
 }
 
 function searchCity(city) {
@@ -176,4 +182,4 @@ let currentLocation = document.querySelector("#current-location-button");
 
 currentLocation.addEventListener("click", retrieveCurrentLocation);
 
-searchCity("London");
+searchCity("Amsterdam");
